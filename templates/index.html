@@ -1,0 +1,90 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Exclusive insights and data analysis on web traffic patterns.">
+  <meta name="keywords" content="analytics, web traffic, SEO, data analysis, bots">
+  <title>James Xiao – Web Traffic Insights</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  
+  <script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Understanding Web Traffic Patterns",
+    "author": {
+      "@type": "Person",
+      "name": "James Xiao"
+    },
+    "datePublished": "2025-06-05",
+    "articleBody": "In-depth analysis of web traffic and bot behavior..."
+  }
+  </script>
+</head>
+<body>
+  <header>
+  <h1>James Xiao</h1>
+  <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="blog.html">Blog</a>
+      <a href="projects.html">Projects</a>
+    </nav>
+</header>
+
+  <main class="container">
+    <section class="animate fade-in">
+    <h2>Latest Article</h2>
+    <p>Explore how bots interact with web content and what patterns emerge in traffic analysis.</p>
+    <a href="blog.html" class="button">Read More</a>
+  </section>
+
+  <section class="animate slide-left">
+    <h2>Projects</h2>
+    <p>Learn more about my ongoing experiments in anomaly detection and honeypot deployment.</p>
+    <a href="projects.html" class="button">View Projects</a>
+  </section>
+
+  <section class="blog-preview animate fade-in">
+    <h2>Understanding Web Traffic Patterns</h2>
+    <img src="https://jamesxiao05.github.io/GithubImage.png" alt="Web Traffic Analysis" class="blog-image">
+    <p>In-depth analysis of web traffic and bot behavior...</p>
+  </section>
+    
+  </main>
+
+  <footer>
+  <p>&copy; 2025 James Xiao. All rights reserved.</p>
+</footer>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const animatedElements = document.querySelectorAll('.animate');
+
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px"
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    animatedElements.forEach(el => {
+      observer.observe(el);
+    });
+  });
+</script>
+
+
+<a href="access-form.html" style="display:none;" tabindex="-1" aria-hidden="true">Access Form</a>
+<a href="robots-only.html" style="display:none;" tabindex="-1" aria-hidden="true">Robots Only</a>
+<a href="do-not-visit.html" style="display:none;" tabindex="-1" aria-hidden="true">Do Not Visit</a>
+
+</body>
+</html>

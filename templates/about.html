@@ -1,0 +1,62 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="About James Xiao and his work on web traffic analysis and bot detection." />
+  <meta name="keywords" content="about, james xiao, web traffic, bot detection, data science" />
+  <title>About – James Xiao</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header>
+    <h1>James Xiao</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="blog.html">Blog</a>
+      <a href="projects.html">Projects</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="animate fade-in">
+      <h2>About Me</h2>
+      <p>I am a data scientist specializing in web traffic analytics, anomaly detection, and honeypot development.</p>
+    </section>
+
+    <section class="animate slide-right">
+      <h3>My Mission</h3>
+      <p>To build robust tools and methods that identify malicious and spoofing bots while preserving user privacy.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 James Xiao. All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const animatedElements = document.querySelectorAll('.animate');
+
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px"
+      };
+
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      animatedElements.forEach(el => {
+        observer.observe(el);
+      });
+    });
+  </script>
+</body>
+</html>

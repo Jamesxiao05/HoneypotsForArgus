@@ -1,0 +1,202 @@
+/* Base colors */
+:root {
+  --color-primary: #0000cc;        /* Dark Blue */
+  --color-secondary: #0099cc;      /* Light Blue */
+  --color-bg: #ccccff;             /* Purple Light Background */
+  --color-text: #e2e8f0;           /* Light Gray / White */
+  --color-accent: #f6ad55;         /* Soft Orange for highlights */
+
+  /* Duke-inspired theme */
+  --duke-blue: #012169;
+  --duke-light-blue: #00539b;
+  --duke-accent-gold: #c99700;
+  --duke-gray: #f4f4f4;
+  --duke-dark-gray: #333333;
+}
+
+/* Global styles */
+body {
+  background-color: var(--duke-gray);
+  color: var(--duke-dark-gray);
+  font-family: 'Source Sans Pro', Arial, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+a:hover,
+a:focus {
+  color: var(--color-secondary);
+  outline: none;
+}
+
+/* Container */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+/* Header */
+header {
+  background-color: var(--duke-blue);
+  color: white;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+header h1 {
+  margin: 0;
+  color: white; /* ✅ Make the name white */
+  font-weight: 700;
+}
+
+nav {
+  margin-top: 0.5rem;
+}
+
+nav a {
+  margin-right: 1.5rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: white;
+}
+nav a:hover {
+  color: var(--duke-accent-gold);
+}
+
+/* Main sections */
+main, section {
+  padding: 2rem 3rem;
+  background-color: white;
+  margin: 2rem auto;
+  max-width: 1000px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Typography */
+h1, h2, h3 {
+  color: var(--duke-blue);
+  font-family: Georgia, 'Times New Roman', serif;
+  margin-bottom: 1rem;
+}
+
+h2 {
+  font-size: 2rem;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+/* Blog image */
+.blog-image {
+  max-width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+  margin: 1rem 0 1.5rem 0;
+  transition: transform 0.3s ease;
+}
+
+.blog-image:hover {
+  transform: scale(1.03);
+}
+
+/* Buttons */
+button, .button, input[type="submit"] {
+  background-color: var(--duke-blue);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover,
+button:hover,
+input[type="submit"]:hover {
+  background-color: var(--duke-light-blue);
+}
+
+/* Footer */
+footer {
+  background-color: var(--duke-blue);
+  color: white;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  margin-top: 4rem;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+}
+
+/* Scroll Animations: Initial State */
+.animate {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease-out;
+  will-change: opacity, transform;
+}
+
+.animate.slide-left {
+  transform: translateX(-30px);
+}
+
+.animate.slide-right {
+  transform: translateX(30px);
+}
+
+.animate.zoom {
+  transform: scale(0.9);
+}
+
+/* Scroll Animations: Visible State */
+.animate.visible {
+  opacity: 1;
+  transform: translateX(0) translateY(0) scale(1);
+}
+
+/* Additional subtle flair */
+section:hover {
+  filter: drop-shadow(0 0 6px var(--color-secondary));
+  transition: filter 0.3s ease;
+}
+
+/* Fade-in keyframes */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn ease-in 1;
+  animation-fill-mode: forwards;
+  animation-duration: 1s;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  nav a {
+    display: block;
+    margin: 0.5rem 0;
+  }
+  .container {
+    padding: 1rem;
+  }
+}

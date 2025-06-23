@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: /access-form.html
+Disallow: /robots-only.html
+Disallow: /do-not-visit.html
+
+# Crawl-delay
+Crawl-delay: 10
+
+# Add a sitemap for indexing 
+Sitemap: https://jamesxiao05.github.io/sitemap.xml

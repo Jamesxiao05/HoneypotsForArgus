@@ -1,0 +1,86 @@
+<!DOCTYPE html>  
+<html lang="en"> 
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Access Request Form</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <meta name="description" content="Request access to private resources and analytics reports." />
+  <style>
+    body {
+      background: #1a1a1a;
+      color: #ff6f3c; /* warm orange */
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 2rem;
+      max-width: 480px;
+      margin: 3rem auto;
+      border: 2px solid #ff6f3c;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #ff6f3c;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    label {
+      display: block;
+      margin: 1rem 0 0.25rem;
+      font-weight: 600;
+    }
+    input[type="text"],
+    input[type="email"] {
+      width: 100%;
+      padding: 0.5rem;
+      border-radius: 4px;
+      border: 1px solid #ff6f3c;
+      background: #2a2a2a;
+      color: #fff;
+    }
+    input[type="submit"] {
+      margin-top: 1.5rem;
+      padding: 0.75rem;
+      width: 100%;
+      background: #ff6f3c;
+      border: none;
+      border-radius: 6px;
+      color: #1a1a1a;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    input[type="submit"]:hover {
+      background: #e65b1a;
+    }
+    /* Hidden honeypot field for bots */
+    .hidden-field {
+      position: absolute;
+      left: -10000px;
+      top: auto;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      visibility: hidden;
+    }
+  </style>
+</head>
+<body>
+  <h1>Request Access</h1>
+  <p>Please fill out the form below to request access to private reports and data.</p>
+  <form action="#" method="POST" autocomplete="off" novalidate>
+    <label for="name">Full Name</label>
+    <input type="text" id="name" name="name" placeholder="John Doe" required />
+
+    <label for="email">Email Address</label>
+    <input type="email" id="email" name="email" placeholder="email@example.com" required />
+
+    <!-- Honeypot hidden field to catch bots -->
+    <label class="hidden-field" for="website">Website</label>
+    <input type="text" id="website" name="website" class="hidden-field" autocomplete="off" tabindex="-1" />
+
+    <input type="submit" value="Submit Request" />
+  </form>
+
+  <p style="margin-top: 2rem; font-size: 0.9rem; color: #555;">Note: This form is a honeypot trap. Legitimate users will not see or fill this form.</p>
+
+</body>
+</html>

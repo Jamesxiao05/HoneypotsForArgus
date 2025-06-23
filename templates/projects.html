@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Projects on anomaly detection and honeypot deployment." />
+  <meta name="keywords" content="projects, anomaly detection, honeypots, web scraping, bots" />
+  <title>Projects – James Xiao</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header>
+    <h1>James Xiao</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="blog.html">Blog</a>
+      <a href="projects.html">Projects</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="animate fade-in">
+      <h2>Ongoing Projects</h2>
+      <p>Explore my current work on anomaly detection algorithms and honeypot deployments for bot detection.</p>
+    </section>
+
+    <section class="animate slide-left">
+      <h3>Project 1: Anomaly Detection Model</h3>
+      <p>Developing a real-time streaming anomaly detector to identify spoofing bots with high accuracy.</p>
+    </section>
+
+    <section class="animate slide-right">
+      <h3>Project 2: Honeypot Deployment</h3>
+      <p>Building honeypot traps to lure and identify malicious scrapers and spoofed bots efficiently.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 James Xiao. All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const animatedElements = document.querySelectorAll('.animate');
+
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px"
+      };
+
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      animatedElements.forEach(el => {
+        observer.observe(el);
+      });
+    });
+  </script>
+</body>
+</html>
