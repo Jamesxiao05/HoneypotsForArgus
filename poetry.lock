@@ -1159,6 +1159,16 @@ docs = ["sphinx", "sphinx-rtd-theme", "zope.interface"]
 tests = ["coverage[toml] (==5.0.4)", "pytest (>=6.0.0,<7.0.0)"]
 
 [[package]]
+name = "pyperclip"
+version = "1.9.0"
+description = "A cross-platform clipboard module for Python. (Only handles plain text for now.)"
+optional = false
+python-versions = "*"
+files = [
+    {file = "pyperclip-1.9.0.tar.gz", hash = "sha256:b7de0142ddc81bfc5c7507eea19da920b92252b548b96186caf94a5e2527d310"},
+]
+
+[[package]]
 name = "pytest"
 version = "8.4.0"
 description = "pytest: simple powerful testing with Python"
@@ -1593,4 +1603,4 @@ propcache = ">=0.2.1"
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.11.0,<3.12"
-content-hash = "30fd1f3cc65226b2edd00a324695613bd2587144e8a2454179c9d32f05ede1f6"
+content-hash = "5a731725ec757c8ee8b9f5f347662fcc0a90fa9b5e5a9b51f9cbcb9e00a42140"
