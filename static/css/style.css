@@ -200,3 +200,142 @@ section:hover {
     padding: 1rem;
   }
 }
+
+/* Highlight boxes for key facts or notices */
+.highlight {
+  background-color: var(--color-bg);
+  border-left: 4px solid var(--duke-accent-gold);
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: 4px;
+}
+
+/* New sections (like Data Insights, Meet the Team, Get in Touch) */
+section {
+  display: block;
+}
+
+/* Subtle card hover effect for all sections */
+section:hover {
+  filter: drop-shadow(0 0 6px var(--color-secondary));
+  transition: filter 0.3s ease;
+}
+
+/* Additional subtle animations (reuse existing classes) */
+.animate.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.animate.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* If you want a subtle zoom effect on hover images */
+.blog-image:hover {
+  transform: scale(1.03);
+}
+
+/* Contact page container */
+.contact-container {
+  max-width: 800px;
+  margin: 2rem auto;
+}
+
+/* Contact intro text */
+.contact-intro {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Contact form styling */
+.contact-form {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.contact-form .form-group {
+  margin-bottom: 1.5rem;
+}
+
+.contact-form label {
+  display: block;
+  font-weight: 600;
+  color: var(--duke-dark-gray);
+  margin-bottom: 0.5rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: var(--duke-blue);
+  outline: none;
+}
+
+.contact-form button {
+  display: inline-block;
+  background-color: var(--duke-blue);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.contact-form button:hover {
+  background-color: var(--duke-light-blue);
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .contact-form {
+    padding: 1rem;
+  }
+}
+
+/* Insights grid layout */
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+/* Individual insight cards */
+.insight-card {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.insight-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.insight-card h3 {
+  margin-top: 0;
+  color: var(--duke-blue);
+}
+
+.insight-card p {
+  color: var(--duke-dark-gray);
+  margin-bottom: 1rem;
+}

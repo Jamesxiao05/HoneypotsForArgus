@@ -9,7 +9,7 @@
   <style>
     body {
       background: #1a1a1a;
-      color: #ff6f3c; /* warm orange */
+      color: #ff6f3c;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       padding: 2rem;
       max-width: 480px;
@@ -51,7 +51,6 @@
     input[type="submit"]:hover {
       background: #e65b1a;
     }
-    /* Hidden honeypot field for bots */
     .hidden-field {
       position: absolute;
       left: -10000px;
@@ -82,5 +81,12 @@
 
   <p style="margin-top: 2rem; font-size: 0.9rem; color: #555;">Note: This form is a honeypot trap. Legitimate users will not see or fill this form.</p>
 
+  <script>
+    const form = document.querySelector("form");
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+      window.location.href = "thanks.html";
+    });
+  </script>
 </body>
 </html>
