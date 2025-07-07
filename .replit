@@ -14,3 +14,14 @@ deploymentTarget = "cloudrun"
 [[ports]]
 localPort = 5000
 externalPort = 80
+
+[workflows]
+
+[[workflows.workflow]]
+name = "Honeypot Pipeline"
+mode = "sequential"
+author = 43483974
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "./pipeline.sh HoneypotsForArgus honeypot.service"
