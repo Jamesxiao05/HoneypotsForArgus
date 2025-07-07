@@ -1,20 +1,17 @@
-
 #!/bin/bash
 
-# Auto-deployment script that checks for git changes and runs the pipeline
+# Usage: ./deploy.sh <folder_path> <service_name>
+# Example: ./deploy.sh /home/ubuntu/myapp myapp.service
 
-echo "Checking for git updates..."
+FOLDER="$1"
+SERVICE="$2"
 
-# Fetch latest changes from remote
-git fetch origin main
+# Exit on any error
+set -e
 
-# Check if there are any new commits
-LOCAL=$(git rev-parse HEAD)
-REMOTE=$(git rev-parse origin/main)
-
-if [ "$LOCAL" != "$REMOTE" ]; then
-    echo "New changes detected! Running deployment pipeline..."
-    ./pipeline.sh HoneypotsForArgus honeypot.service
-else
-    echo "No new changes detected."
-fi
+ssh -i <(echo "$SSH_KEY") -o StrictHostKeyChecking=no ubuntu@129.153.2.131 << EOF
+  cd "$FOLDER"
+  git pull origin main
+  sudo systemctl restart "$SERVICE"
+  exit
+EOF
