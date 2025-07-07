@@ -1,0 +1,21 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Run remote deployment script
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+        run: |
+          chmod +x ./deploy.sh
+          ./deploy.sh /home/ubuntu/HoneypotsForArgus honeypot.service
