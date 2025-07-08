@@ -51,7 +51,7 @@ except Exception as e:
 
 
 def _get_values_from_json(data: Dict, path: str) -> List[str]:
-    '''These are just helper functions used to help parse through the JSON file and get specific values from it. These are             later used in our IP verification functions like the DNS and CIDR verification functions. Specifically, it finds things         like prefixes, ipv4Prefix, and ipv6Prefix. 
+    '''These are just helper functions used to help parse through the JSON file and get specific values from it. These are             later used in our IP verification functions like the DNS and CIDR verification functions. Specifically, it finds things         like prefixes, ipv4Prefix, and ipv6Prefix. This is focusing on the instance/user agent for this function.
     '''
     try:
         # Match the specific pattern: $.key[*] or $.key[*]['subkey1','subkey2']
