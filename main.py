@@ -201,14 +201,14 @@ def analyze_bot_request(ip_address: str, user_agent: str) -> Dict:
         ua_is_forbidden = any(re.search(p, user_agent) for p in forbidden_patterns)
         if ua_is_accepted and not ua_is_forbidden:
             bot_id = bot.get("id")
-            if bot.get("verification"): # Note: Probably place for error
+            if bot.get("verification"):
                 if verify_cidr(ip_address, bot_id) or verify_dns(ip_address, bot_id):
                     return {"status": "LEGITIMATE", "bot_id": bot_id, "reason": "IP verification passed."}
                 else:
                     return {"status": "SPOOFED", "bot_id": bot_id, "reason": "IP verification failed."}
             if bot.get("instances"):
                 if is_same_entity_ua(user_agent, bot["instances"].get("rejected", [])):
-                     return {"status": "REJECTED", "bot_id": bot_id, "reason": "UA matched a rejected instance."}
+                    return {"status": "REJECTED", "bot_id": bot_id, "reason": "UA matched a rejected instance."}
                 if is_same_entity_ua(user_agent, bot["instances"].get("accepted", [])):
                     return {"status": "LEGITIMATE", "bot_id": bot_id, "reason": "UA matched an accepted instance."}
             return {"status": "UNVERIFIABLE", "bot_id": bot_id, "reason": "Pattern matched, no conclusive proof."}
@@ -217,16 +217,9 @@ def analyze_bot_request(ip_address: str, user_agent: str) -> Dict:
 def log_to_supabase(req):
     """Main logging function that analyzes the request and logs it to Supabase."""
     try:
-        if req.path not in TRAP_PAGES:
-            return
-
         ip = get_client_ip(req.headers, req.remote_addr)
         ua = req.headers.get("User-Agent", "")
-
-        # Perform the comprehensive analysis
         analysis_result = analyze_bot_request(ip, ua)
-
-        # Gather all data for logging
         data_to_log = {
             "timestamp": datetime.utcnow().isoformat(),
             "ip_address": ip,
@@ -236,29 +229,58 @@ def log_to_supabase(req):
             "path": req.path,
             "uri_query": req.query_string.decode(),
             "raw_request": f"{req.method} {req.full_path}",
-            "ipinfo": ipinfo_lookup(ip), # Optional: log full ipinfo data
-            "analysis_result": analysis_result # Log the detailed analysis verdict
+            "ipinfo": ipinfo_lookup(ip),
+            "analysis_result": analysis_result
         }
-
         response, count = supabase.table("honeypot_logs").insert(data_to_log).execute()
         print(f"[+] Logged to Supabase. Status: {analysis_result.get('status')}")
-
     except Exception as e:
         print(f"[!!!] Logging failed: {e}")
+
+def log_regular_hit(req):
+    """Logs basic info for non-trap pages to a separate table."""
+    try:
+        ip = get_client_ip(req.headers, req.remote_addr)
+        ua = req.headers.get("User-Agent", "")
+        data_to_log = {
+            "timestamp": datetime.utcnow().isoformat(),
+            "ip_address": ip,
+            "user_agent": ua,
+            "path": req.path,
+        }
+        supabase.table("regular_hits").insert(data_to_log).execute()
+        print(f"[+] Logged regular hit for path: {req.path}")
+    except Exception as e:
+        print(f"[!!!] Regular logging failed: {e}")
 
 # --- Flask Routes ---
 
 @app.route('/')
 def serve_index():
-    log_to_supabase(request)
+    """
+    Handles the homepage. This is never a trap page, so it only logs
+    to the regular_hits table.
+    """
+    log_regular_hit(request)
     return render_template('index.html')
 
 @app.route('/<path:page>')
 def serve_pages(page):
-    log_to_supabase(request)
-    # This catch-all can serve HTML files or just render a generic page
+    """
+    Handles all other pages and decides where to log them.
+    """
+    # Check if the requested path is one of the trap pages
+    if f"/{page}" in TRAP_PAGES:
+        # If it's a trap page, run the full analysis and log to honeypot_logs
+        log_to_supabase(request)
+    else:
+        # For any other page, log it as a simple hit to regular_hits
+        log_regular_hit(request)
+
+    # After logging, serve the content
     if page.endswith('.html') and os.path.exists(f'templates/{page}'):
         return render_template(page)
+
     return "<h1>Honeypot Page</h1><p>Thank you for your visit.</p>", 200
 
 if __name__ == '__main__':
