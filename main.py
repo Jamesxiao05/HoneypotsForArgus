@@ -9,6 +9,9 @@ from typing import List, Dict, Set, Tuple
 from flask import Flask, request, render_template
 from supabase import create_client
 from datetime import datetime
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # App & Supabase configuration with keys from environment variables
 app = Flask(__name__)
