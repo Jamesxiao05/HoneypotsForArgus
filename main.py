@@ -6,7 +6,7 @@ import re
 import json
 import os
 from typing import List, Dict, Set, Tuple
-from flask import Flask, request, render_template
+from flask import Flask, request,  render_template, send_from_directory
 from supabase import create_client
 from datetime import datetime
 from dotenv import load_dotenv
@@ -263,9 +263,9 @@ def analyze_bot_request(ip_address: str, user_agent: str) -> Dict:
                     }
             if bot.get("instances"):
                 if is_same_entity_ua(user_agent,
-                                     bot["instances"].get("rejected", [])):
+                                     bot["instances"].get("spoofed", [])):
                     return {
-                        "status": "REJECTED",
+                        "status": "SPOOFED",
                         "bot_id": bot_id,
                         "reason": "UA matched a rejected instance."
                     }
@@ -362,6 +362,14 @@ def serve_pages(page):
         return render_template(page)
 
     return "<h1>Honeypot Page</h1><p>Thank you for your visit.</p>", 200
+
+@app.route('/robots.txt')
+def serve_robots_txt():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'robots.txt')
+
+@app.route('/sitemap.xml')
+def serve_sitemap_xml():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'sitemap.xml')
 
 
 # Must be at the end of the file to run the app. Keep the port on 8080 which is used to communicate with Nginx and Gunicorn for public server hosting.
