@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
   <title>ArgusLabz – Web Traffic Data Collection</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
+
 <body>
   <header>
     <h1>ArgusLabz</h1>
@@ -23,41 +25,47 @@
   <main class="container">
     <section class="animate fade-in">
       <h2>Latest Finds</h2>
-      <p>Find out more about web scrapers and crawlers, and how they access and view different sites. Specifically, dive into the cool information we've gathered on web traffic patterns and bot behavior by logging their access to our site, specific pages, and how we analyze the data. </p>
+      <p>Find out more about web scrapers and crawlers, and how they access and view different sites. Specifically, dive
+        into the cool information we've gathered on web traffic patterns and bot behavior by logging their access to our
+        site, specific pages, and how we analyze the data. </p>
       <a href="blog.html" class="button">Read More Here</a>
     </section>
 
     <section class="animate slide-left">
       <h2>Projects</h2>
-      <p>Learn more about our ongoing experiments and developments in generating hidden link honeypots, HTML generation honeypots, clustering and classification AI models to find likely spoofers, and a CLI app that can use all of the above.</p>
+      <p>Learn more about our ongoing experiments and developments in generating hidden link honeypots, HTML generation
+        honeypots, clustering and classification AI models to find likely spoofers, and a CLI app that can use all of
+        the above.</p>
       <a href="projects.html" class="button">View Projects Here</a>
     </section>
 
     <section class="blog-preview animate fade-in">
       <h2>Understanding Web Traffic Patterns</h2>
-      <p>We are trying to stop people and bots like what is depicted below</p>
-      <img src="https://jamesxiao05.github.io/GithubImage-2.png" alt="Web Traffic Analysis" class="blog-image">
-      <p>In-depth analysis of web traffic and bot behavior...</p>
+      <h4>We are trying to stop users and bots that malicious, such an example is what is depicted below:</h4>
+      <p>**Not for real though**</p>
+      <img src="{{ url_for('static', filename='images/GithubImage-2.png') }}" alt="Web Traffic Analysis"
+        class="blog-image">
+      <p>Images is representative of a professional data scraping individual, fluent in data analysis and machine learning.</p>
     </section>
 
     <section class="animate fade-in">
       <h2>Data Insights</h2>
       <div class="highlight">
-        <p><strong>Fact:</strong> Over 40% of web traffic comes from automated bots.</p>
+        <p><strong>Fact:</strong> All regular and good bots should follow the given outline in the robots.txt file and sitemap.xml file and should oblige as requested by the site owner. Only malicious or spoofing bots should be able to access these pages.</p>
       </div>
-      <p>Our research uncovers trends that impact your SEO and security posture. Discover how intelligent monitoring tools can help you stay ahead.</p>
+      <p>Our research uncovers trends that and helps utilize a spoofing algorithm to help detect spoofers straight up. Whether or not they use a VPN or cloud hosting service or even a fake user-agent, our algorithm does it's best at being foolproof and finding scraping once and for all. Discover our specific insights on data scraping and spoofers below.</p>
       <a href="insights.html" class="button">Explore Insights</a>
     </section>
 
     <section class="animate slide-left">
       <h2>Meet the Team</h2>
-      <p>We are data enthusiasts passionate about demystifying web traffic. Get to know the minds behind ArgusLabz.</p>
-      <a href="about.html" class="button">Our Story</a>
+      <p>We are data enthusiasts passionate about demystifying web traffic and finding bots that use proxies and VPN, up to no good. Get to know the minds behind ArgusLabz.</p>
+      <a href="about.html" class="button">More About Us</a>
     </section>
 
     <section class="animate fade-in">
       <h2>Get in Touch</h2>
-      <p>Have questions or want to collaborate? Reach out to us anytime.</p>
+      <p>Have questions or want to collaborate? Reach out to us anytime. Just simply fill out a form and we will get back to you as soon as possible.</p>
       <a href="contact.html" class="button">Contact Us</a>
     </section>
   </main>
@@ -94,4 +102,5 @@
   <a href="robots-only.html" style="display:none;" tabindex="-1" aria-hidden="true">Robots Only</a>
   <a href="do-not-visit.html" style="display:none;" tabindex="-1" aria-hidden="true">Do Not Visit</a>
 </body>
+
 </html>
