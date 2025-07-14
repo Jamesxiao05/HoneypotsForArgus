@@ -323,7 +323,6 @@ def log_regular_hit(req):
         ua = req.headers.get("User-Agent", "")
         data_to_log = {
             "timestamp": datetime.utcnow().isoformat(),
-            "ip_address": ip,
             "user_agent": ua,
             "path": req.path,
         }
