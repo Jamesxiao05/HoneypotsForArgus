@@ -55,6 +55,9 @@ except Exception as e:
 
 def _get_values_from_json(data: Dict, path: str) -> List[str]:
     '''These are just helper functions used to help parse through the JSON file and get specific values from it. These are later used in our IP verification functions like the DNS and CIDR verification functions. Specifically, it finds things like prefixes, ipv4Prefix, and ipv6Prefix. This is focusing on the instance/user agent for this function.
+    @param data: The JSON data to parse.
+    @param path: The JSONPath to the value to get.
+    @return: A list of values from the JSON data.
     '''
     try:
         # Match the specific pattern: $.key[*] or $.key[*]['subkey1','subkey2']
@@ -96,6 +99,8 @@ def _get_values_from_json(data: Dict, path: str) -> List[str]:
 
 def _fetch_json_from_url(url):
     '''Get the urls from the JSON file and parse through them properly. Timeout after so that it doesn't hang indefinitely.
+    @param url: The URL to fetch JSON from.
+    @return: The JSON data from the URL.
     '''
     try:
         response = requests.get(url, timeout=10)
@@ -108,6 +113,8 @@ def _fetch_json_from_url(url):
 
 def ipinfo_lookup(ip_address: str):
     '''Use IPinfo to get the IP address of the client.
+    @param ip_address: The IP address to look up.
+    @return: The IPinfo data for the IP address.
     '''
     url = f"https://ipinfo.io/{ip_address}?token={IPINFO_TOKEN}"
     return _fetch_json_from_url(url)
@@ -115,6 +122,9 @@ def ipinfo_lookup(ip_address: str):
 
 def get_client_ip(headers, remote_addr):
     '''Get the client IP address from the headers or the remote address.
+    @param headers: The headers of the request.
+    @param remote_addr: The remote address of the request.
+    @return: The client IP address.
     '''
     x_forwarded_for = headers.get("X-Forwarded-For", "")
     if x_forwarded_for:
@@ -125,6 +135,9 @@ def get_client_ip(headers, remote_addr):
 
 def verify_cidr(ip_address: str, bot_id: str) -> bool:
     '''Go with a CIDR verification function to verify the IP address of the client and see if it matches the CIDR block of the bot. This is the most reliable way to verify a bot because it checks the IP address directly. It looks at the first 24 bits of a 32 bit IP address to verify the validity of the network the request is coming from and see if it makes sense.
+    @param ip_address: The IP address to verify.
+    @param bot_id: The ID of the bot to verify against.
+    @return: True if the IP address is verified, False otherwise.
     '''
     bot_data = next(
         (bot for bot in WELL_KNOWN_BOTS if bot.get("id") == bot_id), None)
@@ -158,6 +171,9 @@ def verify_cidr(ip_address: str, bot_id: str) -> bool:
 
 def verify_dns(ip_address: str, bot_id: str) -> bool:
     '''Create a DNS verification function to verify the IP address of the client and see if it matches the DNS record of the bot. This is less reliable than the CIDR verification function because it relies on the DNS record of the bot. It simply acts as a reverse DNS check or rDNS, seeing if the IP domain obtained from the check makes is valid.
+    @param ip_address: The IP address to verify.
+    @param bot_id: The ID of the bot to verify against.
+    @return: True if the IP address is verified, False otherwise.
     '''
     bot_data = next(
         (bot for bot in WELL_KNOWN_BOTS if bot.get("id") == bot_id), None)
@@ -186,6 +202,8 @@ def verify_dns(ip_address: str, bot_id: str) -> bool:
 
 def parse_ua_components(ua: str) -> Dict[str, Set[str]]:
     '''This is a back-up test that is run if there is no CIDR or DNS verification data for the bot. It parses the user agent string and compares it to the known user agent strings for the bot. This is less reliable than the CIDR and DNS verification functions because it relies on the user agent string of the bot only. It is also more computationally expensive than the other two functions. Creates a tokenizer that breaks apart and assigns each part of the user agent a token.
+    @param ua: The user agent string to parse.
+    @return: A dictionary with the parsed components of the user agent string.
     '''
     ua_lower = ua.lower()
     parsed = {
@@ -208,6 +226,9 @@ def parse_ua_components(ua: str) -> Dict[str, Set[str]]:
 def compute_advanced_match_score(test_fp: Dict[str, Set[str]],
                                  known_fp: Dict[str, Set[str]]) -> float:
     '''Create a math function that uses discrete mathematical logic to assign each token a weight based on importance and how many times it appears in the user agent string. The intersection and union of the sets of tokens are used to calculate the similarity between the user agent strings. The weights and threshold value can be hypertuned so that it works better.
+    @param test_fp: The parsed components of the test user agent string.
+    @param known_fp: The parsed components of the known user agent string.
+    @return: The similarity score between the test and known user agent strings.
     '''
     weights = {'products': 0.5, 'urls': 0.4, 'domains': 0.4, 'tokens': 0.2}
     score = 0.0
@@ -224,6 +245,10 @@ def is_same_entity_ua(test_ua: str,
                       known_uas: List[str],
                       score_threshold: float = 0.6) -> bool:
     '''Create a function that uses the above functions to determine if the user agent string of the client matches the known user agent strings for the bot by matching it against a threshold score of 0.6.
+    @param test_ua: The user agent string to test.
+    @param known_uas: The known user agent strings for the bot.
+    @param score_threshold: The threshold score for matching.
+    @return: True if the user agent string matches the known user agent strings, False otherwise.
     '''
     if not known_uas: return False
     test_fp = parse_ua_components(test_ua)
@@ -236,6 +261,9 @@ def is_same_entity_ua(test_ua: str,
 
 def analyze_bot_request(ip_address: str, user_agent: str) -> Dict:
     """This is the main part of the bot detection algorithm. It takes the IP address and user agent string of the client and uses the above functions to determine if the client is a bot. It returns a dictionary with the status of the client, the ID of the bot, and a result if it matches, and the reason for the decision.
+    @param ip_address: The IP address of the client.
+    @param user_agent: The user agent string of the client.
+    @return: A dictionary with the status of the client, the ID of the bot, and the reason for the decision.
     """
     for bot in WELL_KNOWN_BOTS:
         patterns = bot.get("pattern", {})
@@ -290,6 +318,8 @@ def analyze_bot_request(ip_address: str, user_agent: str) -> Dict:
 
 def log_to_supabase(req):
     """This is the core part of the logging system. It takes the request object and uses the above functions to determine if the client is a bot and logs the result to the Supabase database. This is used to log ONLY the trap/honeypot pages though. CAN BLOCK THE LAST 8 BITS OF THE IP ADDRESS TO KEEP IT PRIVATE BUT HASN'T BEEN IMPLEMENTED YET.
+    @param req: The request object.
+    @return: None
     """
     try:
         ip = get_client_ip(req.headers, req.remote_addr)
@@ -317,6 +347,8 @@ def log_to_supabase(req):
 
 def log_regular_hit(req):
     """This is the second core part of the logging system. It takes the request object and uses the above functions to determine if the client is a bot and logs the result to the Supabase database. This is used to log everything this time. DO NOT COLLECT IP ADDRESSES OR LOCATION DETAILS FOR PRIVACY REASONS.
+    @param req: The request object.
+    @return: None
     """
     try:
         ip = get_client_ip(req.headers, req.remote_addr)
@@ -338,6 +370,7 @@ def serve_index():
     """
     Handles the homepage. This is never a trap page, so it only logs
     to the regular_hits table.
+    @return: The rendered index.html template.
     """
     log_regular_hit(request)
     return render_template('index.html')
@@ -347,6 +380,8 @@ def serve_index():
 def serve_pages(page):
     """
     Handles all other pages and decides where to log them.
+    @param page: The requested page.
+    @return: The rendered template for the requested page.
     """
     # Check if the requested path is one of the trap pages
     if f"/{page}" in TRAP_PAGES:
@@ -365,12 +400,20 @@ def serve_pages(page):
 
 @app.route('/robots.txt')
 def serve_robots_txt():
+    """
+    Handles and returns the robots.txt file.
+    @return: The robots.txt file.
+    """
     return send_from_directory(os.path.join(app.root_path, 'static'),
                                'robots.txt')
 
 
 @app.route('/sitemap.xml')
 def serve_sitemap_xml():
+    """
+    Handles and returns the sitemap.xml file.
+    @return: The sitemap.xml file.
+    """
     return send_from_directory(os.path.join(app.root_path, 'static'),
                                'sitemap.xml')
 
